@@ -1,13 +1,12 @@
-import { AuthContract } from "@ioc:Adonis/Addons/Auth";
 import Mail from "App/Utils/Mail";
 import User from "App/Models/User";
 import Env from "@ioc:Adonis/Core/Env";
 import ApiToken from "App/Models/ApiToken";
 import Database from "@ioc:Adonis/Lucid/Database";
 import { DateTime } from "luxon";
+import { AuthContract } from "@ioc:Adonis/Addons/Auth";
 
 export default class AuthenticationService {
-  
   /**
    *
    * @param userData
@@ -16,6 +15,7 @@ export default class AuthenticationService {
    */
   public async signup(userData: Partial<User>, auth: AuthContract) {
     const user = await User.create(userData);
+
     await this.sendVerificationMail(user);
     const token = await auth.use("api").login(user);
     return {
@@ -61,6 +61,20 @@ export default class AuthenticationService {
     }
     return {
       msg: "email verified",
+    };
+  }
+  
+  /**
+   *
+   * @param email
+   * @param password
+   * @param auth
+   * @returns
+   */
+  public async login(email: string, password: string, auth: AuthContract) {
+    const token = await auth.use("api").attempt(email, password);
+    return {
+      token,
     };
   }
 
