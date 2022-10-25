@@ -24,3 +24,4 @@ Route.get("/", async () => {
   return { hello: "world" };
 });
 import "App/Controllers/Http/Authentication/Authentication.routes";
+import "App/Controllers/Http/Checks/checks.routes";
