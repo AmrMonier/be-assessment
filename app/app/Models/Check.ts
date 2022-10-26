@@ -19,7 +19,7 @@ export default class Check extends BaseModel {
 
   @column()
   public protocol: Protocol;
-  
+
   @column()
   public url: string;
 
@@ -46,8 +46,8 @@ export default class Check extends BaseModel {
 
   @column()
   public authentication: {
-    username: string;
-    password: string;
+    username: string | undefined;
+    password: string | undefined;
   };
 
   @column()
