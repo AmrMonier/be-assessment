@@ -53,6 +53,13 @@ export default class Check extends BaseModel {
   @column({ serializeAs: undefined })
   public processId: string | null;
 
+
+  @column()
+  public upTime: number | null
+
+  @column()
+  public downTime: number | null
+  
   @column()
   public authentication: {
     username: string | undefined;

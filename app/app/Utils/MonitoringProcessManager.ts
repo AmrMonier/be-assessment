@@ -60,6 +60,7 @@ class MonitoringProcessManager {
   private async scheduleHttpCheck(check: Check) {
     const process = setInterval(async () => {
       try {
+        await check.refresh();
         let startTime = Date.now();
         // here we are checking if the server is up and running and only 5xx responses would be throw an error any 4xx responses indicate that the server is up and a user error occurred
         await axios
@@ -83,7 +84,13 @@ class MonitoringProcessManager {
           })
           .request({});
         await Promise.all([
-          check.merge({ status: Status.UP }).save(),
+          check
+            .merge({
+              status: Status.UP,
+              upTime: check.interval * 60 + (check.upTime || 0),
+              downTime: null,
+            })
+            .save(),
           check.related("logs").create({
             responseTime: Date.now() - startTime,
             status: check.status,
@@ -94,7 +101,13 @@ class MonitoringProcessManager {
           check.related("logs").create({
             status: Status.DOWN,
           }),
-          check.merge({ status: Status.DOWN }).save(),
+          check
+            .merge({
+              status: Status.DOWN,
+              upTime: null,
+              downTime: check.interval * 60 + (check.downTime || 0),
+            })
+            .save(),
         ]);
       }
     }, check.interval * 60 * 1000);
@@ -115,16 +128,23 @@ class MonitoringProcessManager {
    */
   private async scheduleTcpCheck(check: Check) {
     const process = setInterval(async () => {
+      await check.refresh();
       let startTime = Date.now();
-
       const socket = new Socket();
-      const TimeoutId = setTimeout(async () => {
+      const timeoutId = setTimeout(async () => {
+        clearTimeout(timeoutId);
         socket.destroy();
         await Promise.all([
           check.related("logs").create({
             status: Status.DOWN,
           }),
-          check.merge({ status: Status.DOWN }).save(),
+          check
+            .merge({
+              status: Status.DOWN,
+              upTime: null,
+              downTime: check.interval * 60 + (check.downTime || 0),
+            })
+            .save(),
         ]);
       }, check.timeout * 1000);
 
@@ -135,10 +155,16 @@ class MonitoringProcessManager {
           host: check.url,
         },
         async () => {
-          clearTimeout(TimeoutId);
+          clearTimeout(timeoutId);
           socket.destroy();
           await Promise.all([
-            check.merge({ status: Status.UP }).save(),
+            check
+              .merge({
+                status: Status.UP,
+                upTime: check.interval * 60 + (check.upTime || 0),
+                downTime: null,
+              })
+              .save(),
             check.related("logs").create({
               responseTime: Date.now() - startTime,
               status: check.status,
@@ -146,7 +172,7 @@ class MonitoringProcessManager {
           ]);
         }
       );
-    }, check.interval * 1000);
+    }, check.interval * 60 * 1000);
 
     await check
       .merge({

@@ -2,7 +2,8 @@ import CustomException from "App/Exceptions/CustomException";
 import Check from "App/Models/Check";
 import { DateTime } from "luxon";
 import CronJobsManager from "App/Utils/MonitoringProcessManager";
-import { Tag } from "App/Types/Check.types";
+import { Status, Tag } from "App/Types/Check.types";
+import { HttpContext } from "@adonisjs/core/build/standalone";
 export default class ChecksService {
   /**
    *
@@ -98,6 +99,43 @@ export default class ChecksService {
       );
     await CronJobsManager.removeTask(check.processId!);
     return check.merge({ active: false, processId: null }).save();
+  }
+  /**
+   *
+   * @param checkId
+   * @returns
+   */
+  public async checkReport(checkId: string) {
+    const ctx = HttpContext.get();
+
+    const check = await Check.query()
+      .where("id", checkId)
+      .where("user_id", ctx?.auth.user?.id!)
+      .withAggregate("logs", (q) =>
+        q.where("status", Status.UP).count("*").as("up_count")
+      )
+      .withAggregate("logs", (q) =>
+        q.where("status", Status.DOWN).count("*").as("down_count")
+      )
+      .withAggregate("logs", (q) =>
+        q
+          .where("status", Status.UP)
+          .avg("response_time")
+          .as("average_response_time")
+      )
+      .withCount("logs")
+      .preload("logs")
+      .firstOrFail();
+
+    return {
+      status: check.status,
+      availability: check.$extras.up_count / check.$extras.logs_count,
+      outage: check.$extras.down_count,
+      downtime: check.downTime, // if the server is down show for how long otherwise null
+      uptime: check.upTime, // if the server is up show for how long otherwise null
+      response_time: check.$extras.average_response_time,
+      history: check.logs,
+    };
   }
 
   /**

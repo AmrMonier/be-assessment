@@ -138,4 +138,18 @@ export default class ChecksController {
       data: {},
     });
   }
+
+  /**
+   *
+   * @param param0
+   * @returns
+   */
+  public async checkReport({ params, response }: HttpContextContract) {
+    const { id } = params;
+    const check = await this.checkService.checkReport(id);
+    return response.ok({
+      msg: "stopped Monitoring",
+      data: { check },
+    });
+  }
 }

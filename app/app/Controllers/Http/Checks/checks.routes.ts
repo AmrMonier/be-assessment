@@ -8,6 +8,7 @@ Route.group(() => {
   Route.get(":id", "Checks/checks.controller.getSingleCheck");
   Route.post(":id/start", "Checks/checks.controller.startMonitoring");
   Route.post(":id/stop", "Checks/checks.controller.stopMonitoring");
+  Route.get(":id/report", "Checks/checks.controller.checkReport");
 })
   .prefix("/api/checks")
   .middleware(["auth"]);
