@@ -131,6 +131,9 @@ export default class ChecksService {
       .firstOrFail();
 
     return {
+      id: check.id,
+      name: check.name,
+      active_monitoring: check.active,
       status: check.status,
       availability: check.$extras.up_count / check.$extras.logs_count,
       outage: check.$extras.down_count,
@@ -141,6 +144,21 @@ export default class ChecksService {
     };
   }
 
+  /**
+   *
+   * @param tag
+   * @returns
+   */
+  public async TagReport(tag: string) {
+    const checks = await Check.query()
+      .whereILike("tags", `%${tag}%`)
+      .select("id");
+    if (checks.length === 0)
+      throw new CustomException("not checks with this tag", 404);
+    return Promise.all(
+      checks.map((check) => this.checkReport(check.id.toString()))
+    );
+  }
   /**
    *
    * @param check
