@@ -6,6 +6,8 @@ Route.group(() => {
   Route.delete("", "Checks/checks.controller.deleteCheck");
   Route.post("all", "Checks/checks.controller.getAllUserChecks");
   Route.get(":id", "Checks/checks.controller.getSingleCheck");
+  Route.post(":id/start", "Checks/checks.controller.startMonitoring");
+  Route.post(":id/stop", "Checks/checks.controller.stopMonitoring");
 })
   .prefix("/api/checks")
   .middleware(["auth"]);

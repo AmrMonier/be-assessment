@@ -1,6 +1,6 @@
 import BaseSchema from "@ioc:Adonis/Lucid/Schema";
 import User from "App/Models/User";
-import { Protocol } from "App/Types/Protocols";
+import { Protocol } from "App/Types/Check.types";
 
 export default class extends BaseSchema {
   protected tableName = "checks";

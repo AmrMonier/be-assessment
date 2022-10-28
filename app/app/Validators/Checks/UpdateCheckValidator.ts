@@ -1,6 +1,6 @@
 import { schema, CustomMessages, rules } from "@ioc:Adonis/Core/Validator";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
-import { Protocol } from "App/Types/Protocols";
+import { Protocol, Method } from "App/Types/Check.types";
 import Tag from "App/Models/Tag";
 import Check from "App/Models/Check";
 export default class UpdateCheckValidator {
@@ -34,6 +34,7 @@ export default class UpdateCheckValidator {
       Protocol.HTTPS,
       Protocol.TCP,
     ]),
+    method: schema.enum.optional([Method.DELETE, Method.GET, Method.PUT]),
     path: schema.string.optional({ trim: true }),
     port: schema.number.optional([rules.unsigned()]),
     webhook: schema.string.optional({}, [rules.url()]),

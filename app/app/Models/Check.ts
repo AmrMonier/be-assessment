@@ -4,12 +4,15 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  HasMany,
+  hasMany,
   ManyToMany,
   manyToMany,
 } from "@ioc:Adonis/Lucid/Orm";
 import User from "./User";
 import Tag from "./Tag";
-import { Protocol } from "App/Types/Protocols";
+import { Method, Protocol, Status } from "App/Types/Check.types";
+import CheckLog from "./CheckLog";
 export default class Check extends BaseModel {
   @column({ isPrimary: true })
   public id: number;
@@ -45,6 +48,12 @@ export default class Check extends BaseModel {
   public ignoreSsl: boolean;
 
   @column()
+  public method: Method;
+
+  @column({ serializeAs: undefined })
+  public processId: string | null;
+
+  @column()
   public authentication: {
     username: string | undefined;
     password: string | undefined;
@@ -57,6 +66,9 @@ export default class Check extends BaseModel {
 
   @column()
   public active: boolean;
+
+  @column()
+  public status: Status;
 
   @column()
   public userId: number;
@@ -74,4 +86,7 @@ export default class Check extends BaseModel {
     pivotTable: "check_tags",
   })
   tags: ManyToMany<typeof Tag>;
+
+  @hasMany(() => CheckLog)
+  public logs: HasMany<typeof CheckLog>;
 }

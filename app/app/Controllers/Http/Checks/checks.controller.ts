@@ -74,7 +74,16 @@ export default class ChecksController {
     });
   }
 
-  public async getAllUserChecks({ request, response, auth }: HttpContextContract) {
+  /**
+   *
+   * @param param0
+   * @returns
+   */
+  public async getAllUserChecks({
+    request,
+    response,
+    auth,
+  }: HttpContextContract) {
     const { from, to, page, perPage } = await request.validate(
       FetchCheckValidator
     );
@@ -88,6 +97,45 @@ export default class ChecksController {
     return response.ok({
       msg: "get all checks",
       ...checks.toJSON(),
+    });
+  }
+  /**
+   *
+   * @param param0
+   * @returns
+   */
+  public async startMonitoring({
+    params,
+    auth,
+    response,
+  }: HttpContextContract) {
+    const { id } = params;
+    const check = await this.checkService.getCheckByIdOrFail(
+      id,
+      auth.user?.id!
+    );
+    await this.checkService.startMonitoring(check);
+    return response.ok({
+      msg: "started Monitoring",
+      data: {},
+    });
+  }
+
+  /**
+   *
+   * @param param0
+   * @returns
+   */
+  public async stopMonitoring({ params, auth, response }: HttpContextContract) {
+    const { id } = params;
+    const check = await this.checkService.getCheckByIdOrFail(
+      id,
+      auth.user?.id!
+    );
+    await this.checkService.stopMonitoring(check);
+    return response.ok({
+      msg: "stopped Monitoring",
+      data: {},
     });
   }
 }

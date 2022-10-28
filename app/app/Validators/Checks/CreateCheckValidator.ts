@@ -1,7 +1,7 @@
 import { schema, CustomMessages, rules } from "@ioc:Adonis/Core/Validator";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Tag from "App/Models/Tag";
-import { Protocol } from "App/Types/Protocols";
+import { Method, Protocol } from "App/Types/Check.types";
 export default class CreateCheckValidator {
   constructor(protected ctx: HttpContextContract) {}
 
@@ -28,6 +28,7 @@ export default class CreateCheckValidator {
     name: schema.string({ trim: true }),
     url: schema.string({}, [rules.url()]),
     protocol: schema.enum([Protocol.HTTP, Protocol.HTTPS, Protocol.TCP]),
+    method: schema.enum.optional([Method.DELETE, Method.GET, Method.PUT]),
     path: schema.string.optional({ trim: true }),
     port: schema.number.optional([rules.unsigned()]),
     webhook: schema.string.optional({}, [rules.url()]),
