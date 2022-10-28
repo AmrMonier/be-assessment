@@ -2,7 +2,7 @@ import CustomException from "App/Exceptions/CustomException";
 import Check from "App/Models/Check";
 import { DateTime } from "luxon";
 import CronJobsManager from "App/Utils/MonitoringProcessManager";
-import { Status, Tag } from "App/Types/Check.types";
+import { Status } from "App/Types/Check.types";
 import { HttpContext } from "@adonisjs/core/build/standalone";
 export default class ChecksService {
   /**
@@ -11,7 +11,10 @@ export default class ChecksService {
    * @param tags
    * @returns
    */
-  public async createCheck(checkData: Partial<Check>, tags: Tag[] | undefined) {
+  public async createCheck(
+    checkData: Partial<Check>,
+    tags: string[] | undefined
+  ) {
     const check = await Check.create(checkData);
     if (tags && tags.length > 0) await this.attachTags(check, tags);
     return check;
@@ -26,7 +29,7 @@ export default class ChecksService {
   public async updateCheck(
     checkId: number,
     checkData: Partial<Check>,
-    tags: Tag[] | undefined
+    tags: string[] | undefined
   ) {
     const check = await Check.findOrFail(checkId);
     check.merge(checkData);
@@ -143,14 +146,8 @@ export default class ChecksService {
    * @param check
    * @param tags
    */
-  private async attachTags(check: Check, tags: Tag[]) {
-    const alreadyExistingTags: number[] = [];
-    const newTags: { name: string }[] = [];
-    tags?.forEach((t) => {
-      if (t.id) alreadyExistingTags.push(t.id);
-      else newTags.push({ name: t.name! });
-    });
-    await check.related("tags").sync(alreadyExistingTags);
-    await check.related("tags").createMany(newTags);
+  private async attachTags(check: Check, tags: string[]) {
+    const uniqueTags = new Set(tags);
+    return check.merge({ tags: Array.from(uniqueTags).join(",") }).save();
   }
 }

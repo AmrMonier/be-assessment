@@ -23,6 +23,7 @@ export default class extends BaseSchema {
       table.json("asserts").nullable();
       table.boolean("active").defaultTo(false);
       table.integer("user_id").notNullable();
+      table.string("tags");
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

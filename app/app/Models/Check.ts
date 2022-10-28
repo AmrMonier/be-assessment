@@ -6,11 +6,8 @@ import {
   column,
   HasMany,
   hasMany,
-  ManyToMany,
-  manyToMany,
 } from "@ioc:Adonis/Lucid/Orm";
 import User from "./User";
-import Tag from "./Tag";
 import { Method, Protocol, Status } from "App/Types/Check.types";
 import CheckLog from "./CheckLog";
 export default class Check extends BaseModel {
@@ -53,13 +50,12 @@ export default class Check extends BaseModel {
   @column({ serializeAs: undefined })
   public processId: string | null;
 
+  @column()
+  public upTime: number | null;
 
   @column()
-  public upTime: number | null
+  public downTime: number | null;
 
-  @column()
-  public downTime: number | null
-  
   @column()
   public authentication: {
     username: string | undefined;
@@ -80,6 +76,9 @@ export default class Check extends BaseModel {
   @column()
   public userId: number;
 
+  @column({ serialize: (value) => (value ? value.split(",") : []) })
+  public tags: string;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
 
@@ -88,11 +87,6 @@ export default class Check extends BaseModel {
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>;
-
-  @manyToMany(() => Tag, {
-    pivotTable: "check_tags",
-  })
-  tags: ManyToMany<typeof Tag>;
 
   @hasMany(() => CheckLog)
   public logs: HasMany<typeof CheckLog>;
