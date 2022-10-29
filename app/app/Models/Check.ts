@@ -4,6 +4,7 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  computed,
   HasMany,
   hasMany,
 } from "@ioc:Adonis/Lucid/Orm";
@@ -47,10 +48,13 @@ export default class Check extends BaseModel {
   @column()
   public method: Method;
 
-  @column({ serializeAs: undefined })
+  @column({ serializeAs: null })
   public downCount: number | null;
 
-  @column({ serializeAs: undefined })
+  @column({ serializeAs: null })
+  public notification: string;
+
+  @column({ serializeAs: null })
   public processId: string | null;
 
   @column()
@@ -87,6 +91,11 @@ export default class Check extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
+
+  @computed()
+  public get notificationArray() {
+    return this.notification.split(",") || [];
+  }
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>;
