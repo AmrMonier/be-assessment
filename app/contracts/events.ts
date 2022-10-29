@@ -5,6 +5,8 @@
  * file.
  */
 
+import Check from "App/Models/Check"
+
 declare module '@ioc:Adonis/Core/Event' {
   /*
   |--------------------------------------------------------------------------
@@ -26,5 +28,9 @@ declare module '@ioc:Adonis/Core/Event' {
   |
   */
   interface EventsList {
+    "check:statusChanged": {
+      check: Check, 
+      err?: object
+    }
   }
 }

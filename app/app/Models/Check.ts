@@ -48,6 +48,9 @@ export default class Check extends BaseModel {
   public method: Method;
 
   @column({ serializeAs: undefined })
+  public downCount: number | null;
+
+  @column({ serializeAs: undefined })
   public processId: string | null;
 
   @column()
