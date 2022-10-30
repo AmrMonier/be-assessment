@@ -1,0 +1,48 @@
+_id: req_ef3e8d50a3304fb8ad8bcc5b93e49c67
+type: Request
+parentId: fld_4692265a72c34a638e535e0e5a4fb056
+modified: 1667125816215
+created: 1666914174308
+url: "{{ _.baseUrl }}/checks/39/start"
+name: start monitoring
+description: >-
+  # Start Monitoring
+
+  <p>After creating a check it's not started by default this endpoint tells the app to start monitoring</p>
+
+
+  - url: ``` {baseUrl}/api/check/:id/start ``` id is a number
+
+  - method: *POST*
+
+  - auth: ``` bearer ${token}```
+
+  - body: None
+
+  - response: ``` {
+  	"msg": "check started",
+  	"data": {}
+  } 
+
+  ```
+method: POST
+body:
+  mimeType: application/json
+  text: ""
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_cc3ca2f76bf54c6584c849e645543bdf
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+  prefix: bearer
+metaSortKey: -1666631098881.5312
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

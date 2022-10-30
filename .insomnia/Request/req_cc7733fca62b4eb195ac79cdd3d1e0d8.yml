@@ -1,0 +1,41 @@
+_id: req_cc7733fca62b4eb195ac79cdd3d1e0d8
+type: Request
+parentId: fld_4692265a72c34a638e535e0e5a4fb056
+modified: 1667125856229
+created: 1666914685445
+url: "{{ _.baseUrl }}/checks/3/stop"
+name: stop monitoring
+description: |-
+  # Stop Monitoring
+  <p>Stop an active check </p>
+
+  - url: ``` {baseUrl}/api/check/:id/stop ``` id is a number
+  - method: *POST*
+  - auth: ``` bearer ${token}```
+  - body: None
+  - response: ``` {
+  	"msg": "check stoped",
+  	"data": {}
+  } 
+  ```
+method: POST
+body:
+  mimeType: application/json
+  text: ""
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_cc3ca2f76bf54c6584c849e645543bdf
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+  prefix: bearer
+metaSortKey: -1666629278009.1094
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

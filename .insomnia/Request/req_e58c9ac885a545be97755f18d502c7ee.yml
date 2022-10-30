@@ -1,0 +1,53 @@
+_id: req_e58c9ac885a545be97755f18d502c7ee
+type: Request
+parentId: fld_0121b7366ec14d2792f4401be14af2c5
+modified: 1667125633311
+created: 1666987781760
+url: "{{ _.baseUrl }}/checks/39/report"
+name: check report
+description: |-
+  # Check Report
+  <p>Get the status report of a single check by its id</p>
+
+  - url: ``` {baseUrl}/api/checks/:id/report ``` is is a number
+  - method: *GET*
+  - body: None
+  - response: ``` {
+  	"msg": "check report",
+  	"data": {
+  		"check": {
+  				"id": 1,
+  				"name": "third check",
+  				"active_monitoring": false,
+  				"status": null,
+  				"availability": null,
+  				"outage": "0",
+  				"downtime": null,
+  				"uptime": null,
+  				"response_time": null,
+  				"history": []
+  			}
+  	}
+  } 
+  ```
+method: GET
+body:
+  mimeType: application/json
+  text: ""
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_cc3ca2f76bf54c6584c849e645543bdf
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+  prefix: bearer
+metaSortKey: -1666630188445.3203
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

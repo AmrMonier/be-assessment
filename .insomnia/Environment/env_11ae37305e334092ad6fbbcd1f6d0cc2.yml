@@ -1,0 +1,16 @@
+_id: env_11ae37305e334092ad6fbbcd1f6d0cc2
+type: Environment
+parentId: env_57357da1de1735ba3651eeadea9968e9ae183fb0
+modified: 1667133907129
+created: 1666613330110
+name: bosta
+data:
+  baseUrl: http://localhost:8090/api
+  token: Mw.x9x4_E9rq3I7d_zRy5Dly3C-ttn7Xocizy1zWJPJUbe3qGJHIJF_V2KHVvKX
+dataPropertyOrder:
+  "&":
+    - baseUrl
+    - token
+color: null
+isPrivate: false
+metaSortKey: 1666613330110

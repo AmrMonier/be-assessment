@@ -1,0 +1,40 @@
+_id: req_2d669072ced745abb9a6f6e040734ae6
+type: Request
+parentId: fld_d6af4a73240e473f915565a46627cc4c
+modified: 1667126705461
+created: 1666618789802
+url: "{{ _.baseUrl }}/auth/verify"
+name: verify email
+description: >-
+  <p>Verify user email</p>
+
+
+  <p> this Api verifies the user email if the token is valid otherwise it sends him a new token and notify him with the error </p>
+
+
+  - url: ```${baseURL}/api/auth/verify?token=${verification_token}```
+
+  - method: **Get**
+
+  - body: None
+
+  - response: ``` {
+  	"msg": "email verified"
+  }```
+method: GET
+body: {}
+parameters:
+  - id: pair_06ab3097519c48bda08f17b4661b10e2
+    name: token
+    value: 47d01d3f2528ba41c957ee6c9e1b4cd8
+    description: ""
+headers: []
+authentication: {}
+metaSortKey: -1666618789802
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

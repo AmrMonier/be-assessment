@@ -1,0 +1,101 @@
+_id: req_6504ce97c0b048f2a082aa9882af44e7
+type: Request
+parentId: fld_6a54dff411a745beb5de12c9d4de6740
+modified: 1667127830767
+created: 1666791609410
+url: "{{ _.baseUrl }}/checks"
+name: update check
+description: |-
+  <p>Update an existing check</p>
+
+  - url: ```${baseUrl}/api/checks``` 
+  - method: **PUT** or **PATCH**
+  - auth: ```bearer ${token}```
+  - body:  ```{
+  		"id": 1, // required, the id of the check
+  		"name": "first check", //optional
+      "url": "cscs.com", // optional
+      "protocol":"TCP", // optional, ["TCP", "HTTP", "HTTPS"]
+      "path": "", // optional
+      "port": "8080", // optional
+      "webhook": "", // optional
+      "timeout": 10, // optional 
+      "interval": 5, // optional
+      "threshold": 5, // optional
+      "headers": {}, // optional
+      "asserts": {}, // optional
+      "ignore_ssl": true, // optional if protcol value is HTTPS
+      "tags": [
+  			"test", "black", "test"
+      ] // optional, array of string
+  }```
+  - response: ```
+  {
+  	"msg": "check created",
+  	"data": {
+  		"name": "first check",
+  		"url": "cscs.com",
+  		"protocol": "TCP",
+  		"port": 8080,
+  		"timeout": 10,
+  		"interval": 5,
+  		"threshold": 5,
+  		"headers": {},
+  		"asserts": {},
+  		"ignore_ssl": true,
+  		"user_id": 1,
+  		"created_at": "2022-10-29T00:42:11.901+02:00",
+  		"updated_at": "2022-10-29T00:42:11.909+02:00",
+  		"id": 1,
+  		"tags": [
+  			"test",
+  			"black"
+  		]
+  	}
+  }
+  ```
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+    		"id": 1,
+    		"name": "third check",
+        "url": "www.google.com",
+        "protocol":"HTTPS",
+        "path": "",
+        "port": "",
+        "webhook": "",
+        "timeout": 10,
+        "interval": 1,
+        "threshold": 5,
+        "authentication": {
+
+          "password": "1234567"
+        },
+        "headers": {},
+        "asserts": {
+    			
+    		},
+        "ignore_ssl": true,
+        "tags": [
+         "white", "Http"
+        ]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_cc3ca2f76bf54c6584c849e645543bdf
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+  prefix: bearer
+metaSortKey: -1666678441564.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,52 @@
+_id: req_226540f72e864e8d8bdfaff66d6dc5c5
+type: Request
+parentId: fld_d6af4a73240e473f915565a46627cc4c
+modified: 1667133907669
+created: 1666620173647
+url: "{{ _.baseUrl }}/auth/login"
+name: login
+description: |-
+  
+  <p>login as user</p>
+
+  - url: ```${baseURL}/api/auth/login```
+  - method: **POST**
+  - body: ```{
+  	"email": "a.monier2107@gmail.com", // required
+  	"password": "123456789" // required
+  }```
+  - response: ``` {
+  	"token": {
+  		"type": "bearer",
+  		"token": "Mg.tiThfZvg1y5RbLlytJlUOI3RGyYwBmSw1QRk8eJIQOHfUdNYoVXxrK1PHhhX"
+  	},
+  	"user": {
+  		"name": "Amr Monier",
+  		"email": "a.monier2107@gmail.com",
+  		"created_at": "2022-10-29T00:41:53.650+02:00",
+  		"updated_at": "2022-10-29T00:41:53.650+02:00",
+  		"id": 1
+  	}
+  }```
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"email": "a.monier2107@gmail.com",
+    	"password": "123456789"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_2ca8c3b48d2e4c58a4d6c47fc17fadb1
+authentication: {}
+metaSortKey: -1666620173647
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

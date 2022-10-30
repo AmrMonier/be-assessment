@@ -1,0 +1,55 @@
+_id: req_b67e76e428794b94b40bb656e844325a
+type: Request
+parentId: fld_d6af4a73240e473f915565a46627cc4c
+modified: 1667126736516
+created: 1666613311757
+url: "{{ _.baseUrl }}/auth/signup"
+name: signup
+description: |-
+  <p>Register a new user</p>
+
+  - url: ```${baseURL}/api/auth/signup```
+  - method: **POST**
+  - body: ```{
+  	"name": "Amr Monier", // required
+  	"email": "a.monier2107@gmail.com", // required
+  	"password": "123456789", // required, must be atleast of length 8
+  	"password_confirmation": "123456789" // required, must match the password
+  }```
+  - response: ``` {
+  	"token": {
+  		"type": "bearer",
+  		"token": "Mg.tiThfZvg1y5RbLlytJlUOI3RGyYwBmSw1QRk8eJIQOHfUdNYoVXxrK1PHhhX"
+  	},
+  	"user": {
+  		"name": "Amr Monier",
+  		"email": "a.monier2107@gmail.com",
+  		"created_at": "2022-10-29T00:41:53.650+02:00",
+  		"updated_at": "2022-10-29T00:41:53.650+02:00",
+  		"id": 1
+  	}
+  }```
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"name": "Amr Monier",
+    	"email": "a.monier2107@gmail.com",
+    	"password": "123456789",
+    	"password_confirmation": "123456789"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_c5af513a70434fd392cbc31f65d54955
+authentication: {}
+metaSortKey: -1666613275689
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

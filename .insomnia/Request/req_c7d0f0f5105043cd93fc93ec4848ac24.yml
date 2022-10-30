@@ -1,0 +1,61 @@
+_id: req_c7d0f0f5105043cd93fc93ec4848ac24
+type: Request
+parentId: fld_0121b7366ec14d2792f4401be14af2c5
+modified: 1667125525761
+created: 1666997844795
+url: "{{ _.baseUrl }}/report/white"
+name: tag report
+description: >-
+  # Tag Report
+
+  <p>Get a report with all the checks which got the provided tag attched to them</p>
+
+
+  - url: ``` {baseUrl}/api/report/:tag ``` tag is a string value
+
+  - method: *GET*
+
+  - body: None
+
+  - response: ``` {
+  	"msg": "tag report",
+  	"data": {
+  		"check": [
+  			{
+  				"id": 1,
+  				"name": "third check",
+  				"active_monitoring": false,
+  				"status": null,
+  				"availability": null,
+  				"outage": "0",
+  				"downtime": null,
+  				"uptime": null,
+  				"response_time": null,
+  				"history": []
+  			}
+  		]
+  	}
+  } 
+
+  ```
+method: GET
+body:
+  mimeType: application/json
+  text: ""
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_cc3ca2f76bf54c6584c849e645543bdf
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+  prefix: bearer
+metaSortKey: -1666630188495.3203
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
