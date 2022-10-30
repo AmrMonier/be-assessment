@@ -5,6 +5,7 @@ import ApiToken from "App/Models/ApiToken";
 import Database from "@ioc:Adonis/Lucid/Database";
 import { DateTime } from "luxon";
 import { AuthContract } from "@ioc:Adonis/Addons/Auth";
+import CustomException from "App/Exceptions/CustomException";
 
 export default class AuthenticationService {
   /**
@@ -34,7 +35,8 @@ export default class AuthenticationService {
       .where("type", "verification")
       .where("token", token)
       .preload("user")
-      .firstOrFail();
+      .first();
+    if (!_token) throw new CustomException("invalid token", 422);
     if (_token.expiresAt < DateTime.now()) {
       await _token.delete();
       await this.sendVerificationMail(_token.user);
@@ -42,6 +44,7 @@ export default class AuthenticationService {
         msg: "token expired and new one is sent to you",
       };
     }
+
     const transaction = await Database.transaction();
     try {
       await Promise.all([
@@ -57,13 +60,13 @@ export default class AuthenticationService {
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
-      console.error(transaction);
+      console.error(error);
     }
     return {
       msg: "email verified",
     };
   }
-  
+
   /**
    *
    * @param email
