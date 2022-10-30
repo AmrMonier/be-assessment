@@ -1,10 +1,27 @@
-version: '3.1'
+version: '3.9'
 services:
-  db:
-    image: postgres
-    environment:
-      - POSTGRES_PASSWORD=bosta@123
-      - POSTGRES_USER=bosta
-      - POSTGRES_DB=url_monitor_db
+  postgres:
+      container_name: postgres
+      image: postgres:13
+    
+      environment:
+        - POSTGRES_PASSWORD=bosta@123
+        - POSTGRES_USER=bosta
+        - POSTGRES_DB=url_monitor_db
+      ports:
+        - 5432:5432
+  app: 
+   
+    image: app:1.0.0
+    restart: always
+    depends_on:
+      - postgres
+    build: 
+      context: .
     ports:
-      - 5432:5432
+      - 8090:3333
+    env_file:
+      - .env.production
+    environment:
+      - PG_HOST=postgres
+  
