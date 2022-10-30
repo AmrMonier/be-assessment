@@ -1,7 +1,7 @@
 _id: req_6504ce97c0b048f2a082aa9882af44e7
 type: Request
 parentId: fld_6a54dff411a745beb5de12c9d4de6740
-modified: 1667127830767
+modified: 1667142902923
 created: 1666791609410
 url: "{{ _.baseUrl }}/checks"
 name: update check
@@ -14,6 +14,7 @@ description: |-
   - body:  ```{
   		"id": 1, // required, the id of the check
   		"name": "first check", //optional
+  		"method": "GET", // optional, default value "GET", ["GET", "DELETE", "PUT"]
       "url": "cscs.com", // optional
       "protocol":"TCP", // optional, ["TCP", "HTTP", "HTTPS"]
       "path": "", // optional
@@ -23,6 +24,7 @@ description: |-
       "interval": 5, // optional
       "threshold": 5, // optional
       "headers": {}, // optional
+  		"notification": ["email", "push over"] // optional
       "asserts": {}, // optional
       "ignore_ssl": true, // optional if protcol value is HTTPS
       "tags": [
