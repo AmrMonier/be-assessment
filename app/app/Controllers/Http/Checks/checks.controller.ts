@@ -14,11 +14,15 @@ export default class ChecksController {
    * @returns
    */
   public async createCheck({ request, response, auth }: HttpContextContract) {
-    const { tags, ...checkPayload } = await request.validate(
+    const { tags, notification, ...checkPayload } = await request.validate(
       CreateCheckValidator
     );
     const check = await this.checkService.createCheck(
-      { ...checkPayload, userId: auth.user?.id! },
+      {
+        ...checkPayload,
+        notification: notification?.join(","),
+        userId: auth.user?.id!,
+      },
       tags
     );
     return response.created({
@@ -33,10 +37,14 @@ export default class ChecksController {
    * @returns
    */
   public async updateCheck({ request, response }: HttpContextContract) {
-    const { tags, id, ...checkPayload } = await request.validate(
+    const { tags, id, notification, ...checkPayload } = await request.validate(
       UpdateCheckValidator
     );
-    const check = await this.checkService.updateCheck(id, checkPayload, tags);
+    const check = await this.checkService.updateCheck(
+      id,
+      { ...checkPayload, notification: notification?.join(",") },
+      tags
+    );
     return response.ok({
       msg: "check updated",
       data: check,

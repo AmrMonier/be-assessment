@@ -32,4 +32,6 @@ export default Env.rules({
   SMTP_USERNAME: Env.schema.string(),
   SMTP_PASSWORD: Env.schema.string(),
   SG_SENDER: Env.schema.string({ format: "email" }),
+  PUSH_OVER_API_KEY: Env.schema.string(),
+  PUSH_OVER_USER_KEY: Env.schema.string(),
 });

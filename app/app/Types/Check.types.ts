@@ -18,4 +18,5 @@ export enum Status {
 
 export enum NotificationTypes {
   EMAIL = "email",
+  PUSH_OVER = "push over",
 }

@@ -1,6 +1,7 @@
 import type { EventsList } from "@ioc:Adonis/Core/Event";
 import { NotificationTypes } from "App/Types/Check.types";
 import MailNotification from "App/Utils/MailNotification";
+import PushOverNotification from "App/Utils/PushOverlNotification";
 import axios from "axios";
 import { DateTime } from "luxon";
 
@@ -23,11 +24,15 @@ export default class CheckStatus {
     // and to the notification enum for typing and add another case to the switch statement
     // make sure to make a notification class for it which implements the INotificationInterface
     check.notificationArray.forEach(async (notification) => {
+      await check.load("user");
       switch (notification) {
         case NotificationTypes.EMAIL:
           const notifier = new MailNotification();
-          await check.load("user");
           await notifier.notify(check.user, check, err);
+          break;
+        case NotificationTypes.PUSH_OVER:
+          const pushOver = new PushOverNotification();
+          await pushOver.notify(check.user, check, err);
           break;
       }
     });

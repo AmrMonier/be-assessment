@@ -1,6 +1,6 @@
 import { schema, CustomMessages, rules } from "@ioc:Adonis/Core/Validator";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
-import { Method, Protocol } from "App/Types/Check.types";
+import { Method, NotificationTypes, Protocol } from "App/Types/Check.types";
 export default class CreateCheckValidator {
   constructor(protected ctx: HttpContextContract) {}
 
@@ -43,6 +43,7 @@ export default class CreateCheckValidator {
     ignore_ssl: schema.boolean.optional([
       rules.requiredWhen("protocol", "=", Protocol.HTTPS),
     ]),
+    notification: schema.array.optional().members(schema.enum([NotificationTypes.EMAIL, NotificationTypes.PUSH_OVER])),
     tags: schema.array.optional().members(schema.string()),
   });
 
